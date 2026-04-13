@@ -1,0 +1,10 @@
+{
+    // These are recommendations for VS Code extensions 
+    // that are useful when working on this project
+    "recommendations": [
+        "Dart-Code.flutter",                 // Flutter support for Dart
+        "Dart-Code.dart-code",               // Dart language support
+        "vscjava.vscode-gradle",             // Gradle support for Java projects
+        "GitHub.vscode-pull-request-github"  // GitHub Pull Requests and Issues extension
+    ]
+}
