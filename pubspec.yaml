@@ -1,5 +1,5 @@
-name: project
-description: "A new Flutter project."
+name: vedaherb
+description: "Offline-first AI for ASEAN Herbal Heritage. Bridging ancestral wisdom and modern safety via on-device LLM and Computer Vision to combat AMR and provide guidance in rural communities."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -30,25 +30,42 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  # Makes sure our .env is hidden even when hackers decompiles our app!
-  envied: ^1.0.0
+
+  envied: ^1.0.0                # Makes sure our .env is hidden even when hackers decompiles our app!
+  flutter_riverpod: ^2.6.1      # State management solution for Flutter, built on top of the Provider package.
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^6.0.0
   envied_generator: ^1.0.0
   build_runner: ^2.4.0
+  flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.14.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+# The following section is specific to Flutter Splash package. Used for splashscreen (different from loading screen).
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/logo/logo.png
+
+  color_dark: "#121212"
+  image_dark: assets/images/logo/logo.png
+
+  android_12:
+    image: assets/images/logo/logo.png
+    color: "#ffffff"
+    image_dark: assets/images/logo/logo.png
+    color_dark: "#121212"
+
+# The following section is specific to Flutter Launcher Icons package. Used for app icon.
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "assets/images/logo/logo.png"
+  min_sdk_android: 21 # android_happy_version
+  adaptive_icon_background: "#5fa268"
+  adaptive_icon_foreground: "assets/images/logo/icon.png"
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -59,9 +76,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+  - assets/images/logo/logo.png
+  - assets/images/logo/icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -88,3 +105,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
