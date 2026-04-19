@@ -1,0 +1,220 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vedaherb/core/theme.dart';
+import 'package:vedaherb/main.dart';
+
+class TutorialScreen extends ConsumerStatefulWidget {
+  const TutorialScreen({super.key});
+
+  @override
+  ConsumerState<TutorialScreen> createState() => _TutorialScreenState();
+}
+
+class _TutorialScreenState extends ConsumerState<TutorialScreen> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  /// Tutorial content: titles, descriptions, and theme-specific assets.
+  final List<Map<String, String>> _tutorialData = [
+    {
+      'title': 'Wisdom at your fingertips',
+      'description': 'Use your camera to identify herbs and access trusted information instantly.',
+      'imageLight': 'assets/images/illustrations/tutorial_1-light.png',
+      'imageDark': 'assets/images/illustrations/tutorial_1-dark.png',
+    },
+    {
+      'title': 'Built for ASEAN',
+      'description': 'Tailored specifically for the biodiversity of Southeast Asia.',
+      'imageLight': 'assets/images/illustrations/tutorial_2-light.png',
+      'imageDark': 'assets/images/illustrations/tutorial_2-dark.png',
+    },
+    {
+      'title': 'Cultivating safe herbal use',
+      'description': 'Bringing traditional wisdom into the modern world with safety and clarity.',
+      'imageLight': 'assets/images/illustrations/tutorial_3-light.png',
+      'imageDark': 'assets/images/illustrations/tutorial_3-dark.png',
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      backgroundColor: isDark ? VedaTheme.darkBg : VedaTheme.lightBg,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    controller: _pageController,
+                    onPageChanged: (index) => setState(() => _currentPage = index),
+                    itemCount: _tutorialData.length,
+                    itemBuilder: (context, index) {
+                      final data = _tutorialData[index];
+                      final imagePath = isDark ? data['imageDark'] : data['imageLight'];
+                      final bool isVisible = _currentPage == index;
+
+                      return Padding(
+                        padding: const EdgeInsets.all(40.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(imagePath ?? '', height: 250),
+                            const SizedBox(height: 40),
+                            
+                            /// Entry animation for Title.
+                            AnimatedSlide(
+                              offset: isVisible ? Offset.zero : const Offset(0, 0.2),
+                              duration: const Duration(milliseconds: 600),
+                              curve: Curves.easeOutCubic,
+                              child: AnimatedOpacity(
+                                opacity: isVisible ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 600),
+                                child: Text(
+                                  data['title']!,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.headlineMedium
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            
+                            /// Entry animation for Description (staggered slightly slower).
+                            AnimatedSlide(
+                              offset: isVisible ? Offset.zero : const Offset(0, 0.4),
+                              duration: const Duration(milliseconds: 800),
+                              curve: Curves.easeOutCubic,
+                              child: AnimatedOpacity(
+                                opacity: isVisible ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 800),
+                                child: Text(
+                                  data['description']!,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                _buildBottomSection(isDark),
+              ],
+            ),
+            
+            /// Floating Theme Toggle.
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: VedaTheme.brandGreen.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                    color: VedaTheme.brandGreen,
+                  ),
+                  onPressed: () {
+                    ref.read(themeProvider.notifier).state = 
+                        isDark ? ThemeMode.light : ThemeMode.dark;
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Navigation controls and page indicators.
+  Widget _buildBottomSection(bool isDark) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          /// 'Back' button: Hidden on the first page.
+          IgnorePointer(
+            ignoring: _currentPage == 0,
+            child: AnimatedOpacity(
+              opacity: _currentPage == 0 ? 0.0 : 1.0,
+              duration: const Duration(milliseconds: 300),
+              child: TextButton(
+                onPressed: () {
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOutCubic,
+                  );
+                },
+                child: const Text(
+                  'Back',
+                  style: TextStyle(color: VedaTheme.brandGreen, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ),
+
+          /// Animated dot indicators.
+          Row(
+            children: List.generate(
+              _tutorialData.length,
+              (index) => AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                width: _currentPage == index ? 24 : 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: _currentPage == index
+                      ? VedaTheme.brandGreen
+                      : VedaTheme.brandGreen.withValues(alpha: 0.3),
+                ),
+              ),
+            ),
+          ),
+
+          /// 'Next' / 'Start' button: Saves onboarding state upon completion.
+          ElevatedButton(
+            onPressed: () async {
+              if (_currentPage < _tutorialData.length - 1) {
+                _pageController.nextPage(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOutCubic,
+                );
+              } else {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('has_seen_onboarding', true);
+
+                if (mounted) context.go('/home');
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: VedaTheme.brandGreen,
+              foregroundColor: Colors.white,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text(_currentPage < _tutorialData.length - 1 ? 'Next' : 'Start'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+}

@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vedaherb/core/theme.dart';
-import 'package:vedaherb/features/onboarding/loading.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
-void main() {
-  runApp(
-    const ProviderScope(
-      child: VedaHerb(),
-    ),
-  );
+import 'package:vedaherb/core/router.dart';
+
+import 'package:vedaherb/core/theme.dart';
+
+/// Manages app-wide brightness (Light/Dark/System)
+final themeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const ProviderScope(child: VedaHerb()));
 }
 
-/// The root widget of the VedaHerb application.
-///
-/// This class manages global settings and listens to the system 
-/// to toggle between light and dark themes.
-class VedaHerb extends StatelessWidget {
+class VedaHerb extends ConsumerWidget {
   const VedaHerb({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'VedaHerb',
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch state changes for theme and navigation
+    final themeMode = ref.watch(themeProvider);
+    final router = ref.watch(routerProvider);
+
+    return MaterialApp.router(
+      routerConfig: router,
+      title: 'Veda',
       debugShowCheckedModeBanner: false,
-      
-      // Theme Integration
       theme: VedaTheme.lightTheme,
       darkTheme: VedaTheme.darkTheme,
-      themeMode: ThemeMode.system, 
-
-      home: const LoadingScreen(),
+      themeMode: themeMode,
     );
   }
 }
