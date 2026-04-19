@@ -21,20 +21,20 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
     {
       'title': 'It\'s offline, and powerful',
       'description': 'Use your camera and chat with an AI to address mild symptoms with herbal remedies, fully offline.',
-      'imageLight': 'assets/images/illustrations/tutorial_1-light.png',
-      'imageDark': 'assets/images/illustrations/tutorial_1-dark.png',
+      'imageLight': 'assets/images/illustrations/tutorial/tutorial_1-light.png',
+      'imageDark': 'assets/images/illustrations/tutorial/tutorial_1-dark.png',
     },
     {
       'title': 'Built for ASEAN',
       'description': 'Tailored specifically for the biodiversity of Southeast Asia. Access local herbs and remedies for your mild symptoms.',
-      'imageLight': 'assets/images/illustrations/tutorial_2-light.png',
-      'imageDark': 'assets/images/illustrations/tutorial_2-dark.png',
+      'imageLight': 'assets/images/illustrations/tutorial/tutorial_2-light.png',
+      'imageDark': 'assets/images/illustrations/tutorial/tutorial_2-dark.png',
     },
     {
       'title': 'Preserving tradition',
       'description': 'Bringing traditional wisdom into the modern world with safety and clarity from government health data and research.',
-      'imageLight': 'assets/images/illustrations/tutorial_3-light.png',
-      'imageDark': 'assets/images/illustrations/tutorial_3-dark.png',
+      'imageLight': 'assets/images/illustrations/tutorial/tutorial_3-light.png',
+      'imageDark': 'assets/images/illustrations/tutorial/tutorial_3-dark.png',
     },
   ];
 
@@ -65,7 +65,7 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(imagePath ?? '', height: 250),
-                            const SizedBox(height: 40),
+                            const SizedBox(height: 30),
                             
                             /// Entry animation for Title.
                             AnimatedSlide(

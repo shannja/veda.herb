@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:go_router/go_router.dart';
@@ -129,15 +130,46 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ),
 
+            /// Settings FAB — top right corner
+            Positioned(
+              top: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: () => context.push('/settings'),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: VedaTheme.brandGreen.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.tune_rounded,
+                    size: 22,
+                    color: VedaTheme.brandGreen,
+                  ),
+                ),
+              ),
+            ),
+
             /// 2. Scrim overlay
             if (_isOpen)
               GestureDetector(
                 onTap: _closeFab,
                 child: FadeTransition(
                   opacity: _fadeAnimation,
-                  child: Container(
-                    color: Colors.black.withValues(alpha: 0.95),
-                  ),
+                  child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 8.0,
+                        sigmaY: 8.0,
+                      ),
+                      child: Container(
+                      // Use the theme background color with a slight transparency
+                      color: (Theme.of(context).brightness == Brightness.dark 
+                          ? VedaTheme.darkBg 
+                          : VedaTheme.lightBg).withValues(alpha: 0.85), // Adjust alpha for "thickness"
+                    ),
+                    ),
                 ),
               ),
 
@@ -208,28 +240,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ),
                   ),
                 ],
-              ),
-            ),
-
-            /// Settings FAB — top right corner
-            Positioned(
-              top: 10,
-              right: 10,
-              child: GestureDetector(
-                onTap: () => context.push('/settings'),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: VedaTheme.brandGreen.withValues(alpha: 0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.tune_rounded,
-                    size: 22,
-                    color: VedaTheme.brandGreen,
-                  ),
-                ),
               ),
             ),
           ],

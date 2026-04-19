@@ -20,31 +20,31 @@ class VedaTheme {
       displayLarge: TextStyle(
         fontFamily: titleFont,
         fontWeight: FontWeight.bold,
-        fontSize: 28,
+        fontSize: 20,
         color: textColor,
       ),
       headlineMedium: TextStyle(
         fontFamily: titleFont,
         fontWeight: FontWeight.w700,
-        fontSize: 24,
+        fontSize: 18,
         color: textColor,
       ),
       // For Descriptions / Subtitles
       bodyLarge: TextStyle(
         fontFamily: bodyFont,
-        fontSize: 16,
+        fontSize: 12,
         color: textColor.withValues(alpha: 0.8),
       ),
       bodyMedium: TextStyle(
         fontFamily: bodyFont,
-        fontSize: 14,
+        fontSize: 11,
         color: textColor.withValues(alpha: 0.7),
       ),
       // For Buttons
       labelLarge: TextStyle(
         fontFamily: bodyFont,
         fontWeight: FontWeight.w600,
-        fontSize: 16,
+        fontSize: 12,
       ),
     );
   }

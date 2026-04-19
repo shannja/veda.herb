@@ -11,6 +11,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final themeMode = ref.watch(themeProvider);
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       backgroundColor: isDark ? VedaTheme.darkBg : VedaTheme.lightBg,
@@ -23,17 +24,17 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 48),
 
                 /// --- Appearance ---
-                _buildSectionHeader("Appearance", context, isDark),
+                Text("Appearance", style: textTheme.headlineMedium),
                 const SizedBox(height: 16),
                 _buildSettingTile(
                   isDark: isDark,
                   icon: _getThemeIcon(themeMode),
                   label: "Theme",
+                  textTheme: textTheme,
                   trailing: TextButton(
                     onPressed: () {
                       ThemeMode next;
-                      if (themeMode == ThemeMode.system) {
-                        next = ThemeMode.light;
+                      if (themeMode == ThemeMode.system) { next = ThemeMode.light;
                       } else if (themeMode == ThemeMode.light) {
                         next = ThemeMode.dark;
                       } else {
@@ -42,28 +43,39 @@ class SettingsScreen extends ConsumerWidget {
                       ref.read(themeProvider.notifier).state = next;
                     },
                     style: _buttonStyle(),
-                    child: Text(_getThemeLabel(themeMode), style: _textButtonStyle()),
+                    child: Text(
+                      _getThemeLabel(themeMode), 
+                      style: textTheme.labelLarge?.copyWith(color: VedaTheme.brandGreen),
+                    ),
                   ),
                 ),
 
                 const SizedBox(height: 32),
 
                 /// --- About ---
-                _buildSectionHeader("About", context, isDark),
+                Text("About", style: textTheme.headlineMedium),
                 const SizedBox(height: 16),
                 _buildSettingTile(
                   isDark: isDark,
                   icon: Icons.info_rounded,
                   label: "Version",
+                  textTheme: textTheme,
                   trailing: _buildStaticBox(
-                    child: Text("1.0.0", style: _textButtonStyle()),
+                    child: Text(
+                      "1.0.0", 
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: VedaTheme.brandGreen,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
                 _buildSettingTile(
                   isDark: isDark,
                   icon: Icons.description_rounded,
-                  label: "Terms of Service",
+                  label: "Terms",
+                  textTheme: textTheme,
                   trailing: TextButton(
                     onPressed: () => debugPrint("ToS Clicked"),
                     style: _buttonStyle(),
@@ -100,12 +112,13 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  /// Reusable Row Structure
+  /// Reusable Row Structure with Theme Integration
   Widget _buildSettingTile({
     required bool isDark,
     required IconData icon,
     required String label,
     required Widget trailing,
+    required TextTheme textTheme,
   }) {
     return Container(
       height: 64,
@@ -121,14 +134,14 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(width: 16),
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+            style: textTheme.displayLarge?.copyWith(fontSize: 15), // Scale down displayLarge for the label
           ),
           const Spacer(),
           
-          /// Forces all trailing widgets (Buttons, Icons, Text) to the same size
+          /// Strict Size Consistency (80x36)
           SizedBox(
-            width: 70,
-            height: 30,
+            width: 80,
+            height: 36,
             child: trailing,
           ),
         ],
@@ -136,19 +149,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  /// Section Header Styling
-  Widget _buildSectionHeader(String title, BuildContext context, bool isDark) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontFamily: VedaTheme.titleFont,
-            fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : Colors.black87,
-          ),
-    );
-  }
-
-  /// Helper for static info (like Version) to match Button size
+  /// Helper for static info boxes
   Widget _buildStaticBox({required Widget child}) {
     return Container(
       alignment: Alignment.center,
@@ -156,18 +157,12 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  /// Consistent Button Styling
+  /// Button Style derived from VedaTheme logic
   ButtonStyle _buttonStyle() => TextButton.styleFrom(
         backgroundColor: VedaTheme.brandGreen.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
-      );
-
-  TextStyle _textButtonStyle() => const TextStyle(
-        color: VedaTheme.brandGreen,
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
       );
 
   IconData _getThemeIcon(ThemeMode mode) {
