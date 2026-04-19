@@ -19,20 +19,20 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
   /// Tutorial content: titles, descriptions, and theme-specific assets.
   final List<Map<String, String>> _tutorialData = [
     {
-      'title': 'Wisdom at your fingertips',
-      'description': 'Use your camera to identify herbs and access trusted information instantly.',
+      'title': 'It\'s offline, and powerful',
+      'description': 'Use your camera and chat with an AI to address mild symptoms with herbal remedies, fully offline.',
       'imageLight': 'assets/images/illustrations/tutorial_1-light.png',
       'imageDark': 'assets/images/illustrations/tutorial_1-dark.png',
     },
     {
       'title': 'Built for ASEAN',
-      'description': 'Tailored specifically for the biodiversity of Southeast Asia.',
+      'description': 'Tailored specifically for the biodiversity of Southeast Asia. Access local herbs and remedies for your mild symptoms.',
       'imageLight': 'assets/images/illustrations/tutorial_2-light.png',
       'imageDark': 'assets/images/illustrations/tutorial_2-dark.png',
     },
     {
-      'title': 'Cultivating safe herbal use',
-      'description': 'Bringing traditional wisdom into the modern world with safety and clarity.',
+      'title': 'Preserving tradition',
+      'description': 'Bringing traditional wisdom into the modern world with safety and clarity from government health data and research.',
       'imageLight': 'assets/images/illustrations/tutorial_3-light.png',
       'imageDark': 'assets/images/illustrations/tutorial_3-dark.png',
     },
@@ -113,21 +113,51 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
             Positioned(
               top: 10,
               right: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: VedaTheme.brandGreen.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                    color: VedaTheme.brandGreen,
-                  ),
-                  onPressed: () {
-                    ref.read(themeProvider.notifier).state = 
-                        isDark ? ThemeMode.light : ThemeMode.dark;
-                  },
-                ),
+              child: Consumer(
+                builder: (context, ref, child) {
+                  // 1. Watch the current theme mode
+                  final themeMode = ref.watch(themeProvider);
+                  
+                  // 2. Define the icon based on the 3 states
+                  IconData themeIcon;
+                  switch (themeMode) {
+                    case ThemeMode.light:
+                      themeIcon = Icons.light_mode_rounded;
+                      break;
+                    case ThemeMode.dark:
+                      themeIcon = Icons.dark_mode_rounded;
+                      break;
+                    case ThemeMode.system:
+                    themeIcon = Icons.brightness_auto_rounded; // Represents "System"
+                      break;
+                  }
+
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: VedaTheme.brandGreen.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        themeIcon,
+                        color: VedaTheme.brandGreen,
+                      ),
+                      onPressed: () {
+                        // 3. Cycle logic: System -> Light -> Dark -> (back to System)
+                        ThemeMode nextMode;
+                        if (themeMode == ThemeMode.system) {
+                          nextMode = ThemeMode.light;
+                        } else if (themeMode == ThemeMode.light) {
+                          nextMode = ThemeMode.dark;
+                        } else {
+                          nextMode = ThemeMode.system;
+                        }
+                        
+                        ref.read(themeProvider.notifier).state = nextMode;
+                      },
+                    ),
+                  );
+                },
               ),
             ),
           ],

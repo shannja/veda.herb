@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:vedaherb/features/onboarding/loading.dart';
 import 'package:vedaherb/features/onboarding/tutorial.dart';
 import 'package:vedaherb/features/dashboard/dashboard.dart';
+import 'package:vedaherb/features/settings/settings.dart';
 
 /// Helper to wrap screens in a consistent fade-in transition.
 CustomTransitionPage _fadePage({
@@ -26,6 +27,29 @@ CustomTransitionPage _fadePage({
       );
     },
     transitionDuration: Duration(milliseconds: durationMs),
+  );
+}
+
+CustomTransitionPage _slideRightPage({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, anim, secondaryAnim, child) {
+      return SlideTransition(
+        position: anim.drive(
+          Tween<Offset>(
+            begin: const Offset(1, 0), // Start off-screen right
+            end: Offset.zero,
+          ).chain(CurveTween(curve: Curves.easeOutCubic)),
+        ),
+        child: child,
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 400),
   );
 }
 
@@ -57,6 +81,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           state: state,
           child: const HomeScreen(),
           durationMs: 1000, // Slightly longer transition for the final entry.
+        ),
+      ),
+      GoRoute(
+        path: '/settings',
+        pageBuilder: (context, state) => _slideRightPage(
+          context: context,
+          state: state,
+          child: const SettingsScreen(),
         ),
       ),
     ],

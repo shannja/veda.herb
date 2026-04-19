@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class VedaTheme {
-  static const Color brandGreen = Color(0xFF5FA268);
-  static const Color lightBg = Color(0xFFFAFAFA);
-  static const Color darkBg = Color(0xFF121212);
+  static const Color brandGreen = Color.fromRGBO(95, 162, 104, 1);
+  static const Color lightBg = Color.fromRGBO(250, 250, 250, 1);
+  static const Color darkBg = Color.fromRGBO(18, 18, 18, 1);
+  
+  // Accent colors
+  static const Color dangerRed = Color.fromRGBO(226, 77, 77, 1);
+  static const Color warningYellow = Color.fromRGBO(255, 193, 7, 1);
 
   // Font Family Names
   static const String titleFont = 'Onest';

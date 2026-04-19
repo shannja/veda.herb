@@ -81,12 +81,14 @@ flutter:
   assets:
   - assets/images/logo/logo.png
   - assets/images/logo/icon.png
-  - assets/images/illustrations/tutorial_1-light.png
-  - assets/images/illustrations/tutorial_1-dark.png
-  - assets/images/illustrations/tutorial_2-light.png
-  - assets/images/illustrations/tutorial_2-dark.png
-  - assets/images/illustrations/tutorial_3-light.png
-  - assets/images/illustrations/tutorial_3-dark.png
+  - assets/images/illustrations/tutorial/tutorial_1-light.png
+  - assets/images/illustrations/tutorial/tutorial_1-dark.png
+  - assets/images/illustrations/tutorial/tutorial_2-light.png
+  - assets/images/illustrations/tutorial/tutorial_2-dark.png
+  - assets/images/illustrations/tutorial/tutorial_3-light.png
+  - assets/images/illustrations/tutorial/tutorial_3-dark.png
+  - assets/images/illustrations/states/empty-light.png
+  - assets/images/illustrations/states/empty-dark.png
   
   fonts:
     - family: Onest
