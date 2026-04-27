@@ -4,11 +4,7 @@ import 'package:vedaherb/core/theme.dart';
 
 class SessionInputBar extends StatelessWidget {
   const SessionInputBar({
-    super.key,
-    required this.isDark,
-    required this.controller,
-    required this.onSend,
-    required this.onCameraTap,
+    required this.isDark, required this.controller, required this.onSend, required this.onCameraTap, super.key,
   });
 
   final bool isDark;
@@ -68,7 +64,7 @@ class SessionInputBar extends StatelessWidget {
                   color: isDark ? Colors.white : Colors.black87,
                 ),
                 decoration: InputDecoration(
-                  hintText: "Describe your symptoms...",
+                  hintText: 'Describe your symptoms...',
                   hintStyle: TextStyle(
                     fontFamily: VedaTheme.bodyFont,
                     fontSize: 14,

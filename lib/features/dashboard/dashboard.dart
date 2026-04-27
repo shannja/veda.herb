@@ -96,13 +96,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   // Speed dial menu items
   List<DialConfig> get _dialItems => [
     DialConfig(
-      label: "Emergency",
+      label: 'Emergency',
       icon: Icons.emergency_rounded,
       color: VedaTheme.dangerRed,
       onTap: () async {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Please call for medical assistance now."),
+            content: const Text('Please call for medical assistance now.'),
             duration: const Duration(seconds: 3),
             backgroundColor: VedaTheme.dangerRed,
             behavior: SnackBarBehavior.floating,
@@ -115,7 +115,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       },
     ),
     DialConfig(
-      label: "I have symptoms",
+      label: 'I have symptoms',
       icon: Icons.chat_bubble_rounded,
       color: VedaTheme.warningYellow,
       onTap: () async {
@@ -130,7 +130,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       },
     ),
     DialConfig(
-      label: "Scan for herbs",
+      label: 'Scan for herbs',
       icon: Icons.camera_alt_rounded,
       color: VedaTheme.brandGreen,
       onTap: () {
@@ -168,7 +168,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     final session = SessionData(
       sessionId: sessionId,
-      title: "Garden Scan - ${now.toString().substring(0, 10)}",
+      title: 'Garden Scan - ${now.toString().substring(0, 10)}',
       entryPoint: SessionEntryPoint.chat,
       messages: initialMessages,
       identifiedPlant: null,
@@ -320,8 +320,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final session = SessionData(
       sessionId: sessionId,
       title: entryPoint == SessionEntryPoint.camera
-          ? "Garden Scan - ${now.toString().substring(0, 10)}"
-          : "Symptom Chat - ${now.toString().substring(0, 10)}",
+          ? 'Garden Scan - ${now.toString().substring(0, 10)}'
+          : 'Symptom Chat - ${now.toString().substring(0, 10)}',
       entryPoint: entryPoint,
       messages: initialMessages,
       identifiedPlant: null,
@@ -424,7 +424,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                             color: VedaTheme.brandGreen.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.settings_rounded,
                             size: 22,
                             color: VedaTheme.brandGreen,
@@ -447,13 +447,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           ),
                           const SizedBox(height: 40),
                           Text(
-                            "Nothing yet",
+                            'Nothing yet',
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.displayLarge,
                           ),
                           const SizedBox(height: 15),
                           Text(
-                            "Click the + button below to start.",
+                            'Click the + button below to start.',
                             style: Theme.of(context).textTheme.bodyLarge,
                             textAlign: TextAlign.center,
                           ),
@@ -598,9 +598,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     };
 
     final statusLabel = switch (session.status) {
-      SessionStatus.active => "Active",
-      SessionStatus.resolved => "Resolved",
-      SessionStatus.escalated => "Escalated",
+      SessionStatus.active => 'Active',
+      SessionStatus.resolved => 'Resolved',
+      SessionStatus.escalated => 'Escalated',
     };
 
     final statusIcon = switch (session.status) {
@@ -640,7 +640,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             ScaffoldMessenger.of(context).clearSnackBars();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("${session.title} deleted"),
+                content: Text('${session.title} deleted'),
                 duration: const Duration(seconds: 3),
                 backgroundColor: VedaTheme.brandGreen,
                 behavior: SnackBarBehavior.floating,
@@ -875,7 +875,7 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
                   color: VedaTheme.brandGreen.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.settings_rounded,
                   size: 22,
                   color: VedaTheme.brandGreen,
@@ -887,7 +887,7 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
           const SizedBox(height: 16),
 
           /// Page title
-          Text("Sessions", style: Theme.of(context).textTheme.headlineLarge),
+          Text('Sessions', style: Theme.of(context).textTheme.headlineLarge),
 
           const SizedBox(height: 12),
 
@@ -897,14 +897,14 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
             child: Row(
               children: [
                 _buildPill(
-                  label: "All",
+                  label: 'All',
                   isActive: activeFilter == null,
                   onTap: () => onFilterChanged(null),
                   isDark: isDark,
                 ),  
                 const SizedBox(width: 8),
                 _buildPill(
-                  label: "Active",
+                  label: 'Active',
                   isActive: activeFilter == SessionStatus.active,
                   onTap: () => onFilterChanged(SessionStatus.active),
                   isDark: isDark,
@@ -912,7 +912,7 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
                 ),
                 const SizedBox(width: 8),
                 _buildPill(
-                  label: "Resolved",
+                  label: 'Resolved',
                   isActive: activeFilter == SessionStatus.resolved,
                   onTap: () => onFilterChanged(SessionStatus.resolved),
                   isDark: isDark,
@@ -920,7 +920,7 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
                 ),
                 const SizedBox(width: 8),
                 _buildPill(
-                  label: "Escalated",
+                  label: 'Escalated',
                   isActive: activeFilter == SessionStatus.escalated,
                   onTap: () => onFilterChanged(SessionStatus.escalated),
                   isDark: isDark,

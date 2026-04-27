@@ -1,47 +1,13 @@
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vedaherb/features/session/domain/models.dart';
 
-class SessionPersistence {
-  static const String _sessionsKey = 'saved_sessions';
-  
-  // Save all sessions to SharedPreferences
-  static Future<void> saveSessions(Map<String, SessionData> sessions) async {
-    final prefs = await SharedPreferences.getInstance();
-    final sessionsMap = <String, String>{};
-    
-    for (var entry in sessions.entries) {
-      sessionsMap[entry.key] = jsonEncode(entry.value.toJson());
-    }
-    
-    await prefs.setString(_sessionsKey, jsonEncode(sessionsMap));
-  }
-  
-  // Load all sessions from SharedPreferences
-  static Future<Map<String, SessionData>> loadSessions() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? sessionsJson = prefs.getString(_sessionsKey);
-    
-    if (sessionsJson == null) return {};
-    
-    final sessionsMap = jsonDecode(sessionsJson) as Map<String, dynamic>;
-    final result = <String, SessionData>{};
-    
-    for (var entry in sessionsMap.entries) {
-      result[entry.key] = SessionDataJson.fromJson(jsonDecode(entry.value));
-    }
-    
-    return result;
-  }
-  
-  // Clear all sessions (for debugging)
-  static Future<void> clearSessions() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_sessionsKey);
-  }
-}
+// ============================================================================
+// JSON Serialization Extensions
+// ============================================================================
+// These extensions provide toJson/fromJson methods for session models.
+// They are used by SessionRepository for persistence.
+// ============================================================================
 
-// Add toJson/fromJson to SessionData
+/// Extension on [SessionData] for JSON serialization.
 extension SessionDataJson on SessionData {
   Map<String, dynamic> toJson() {
     return {
@@ -72,7 +38,7 @@ extension SessionDataJson on SessionData {
   }
 }
 
-// Add toJson/fromJson to SessionChatMessage
+/// Extension on [SessionChatMessage] for JSON serialization.
 extension ChatMessageJson on SessionChatMessage {
   Map<String, dynamic> toJson() {
     return {

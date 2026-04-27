@@ -47,12 +47,12 @@ class SettingsScreen extends ConsumerWidget {
 
             const SizedBox(height: 16),
             /// --- Appearance ---
-            Text("Appearance", style: textTheme.headlineLarge),
+            Text('Appearance', style: textTheme.headlineLarge),
             const SizedBox(height: 16),
             _buildSettingTile(
               isDark: isDark,
               icon: _getThemeIcon(themeMode),
-              label: "Theme",
+              label: 'Theme',
               textTheme: textTheme,
               trailing: TextButton(
                 onPressed: () {
@@ -78,12 +78,12 @@ class SettingsScreen extends ConsumerWidget {
             _buildSettingTile(
               isDark: isDark,
               icon: Icons.language,
-              label: "Language",
+              label: 'Language',
               textTheme: textTheme,
               trailing: _buildDropdown(
                 isDark: isDark,
                 currentValue: settings?.language ?? 'English',
-                options: ["English", "Filipino"],
+                options: ['English', 'Filipino'],
                 textTheme: textTheme,
                 onSelected: (val) {
                   if (val != null) {
@@ -121,16 +121,16 @@ class SettingsScreen extends ConsumerWidget {
 
             const SizedBox(height: 32),
             /// --- About ---
-            Text("About", style: textTheme.headlineLarge),
+            Text('About', style: textTheme.headlineLarge),
             const SizedBox(height: 16),
             _buildSettingTile(
               isDark: isDark,
               icon: Icons.info,
-              label: "App Version",
+              label: 'App Version',
               textTheme: textTheme,
               trailing: _buildStaticBox(
                 child: Text(
-                  "1.0.0",
+                  '1.0.0',
                   style: textTheme.bodyLarge?.copyWith(
                     color: VedaTheme.brandGreen,
                     fontWeight: FontWeight.bold,
@@ -143,12 +143,12 @@ class SettingsScreen extends ConsumerWidget {
             _buildSettingTile(
               isDark: isDark,
               icon: Icons.cloud,
-              label: "Library",
-              subtitle: "Last sync",
+              label: 'Library',
+              subtitle: 'Last sync',
               textTheme: textTheme,
               trailing: _buildStaticBox(
                 child: Text(
-                  "May 2026",
+                  'May 2026',
                   style: textTheme.bodyLarge?.copyWith(
                     color: VedaTheme.brandGreen,
                     fontWeight: FontWeight.bold,
@@ -167,11 +167,11 @@ class SettingsScreen extends ConsumerWidget {
             _buildSettingTile(
               isDark: isDark,
               icon: Icons.warning_rounded,
-              label: "Disclaimer",
-              subtitle: "Safety & limits",
+              label: 'Disclaimer',
+              subtitle: 'Safety & limits',
               textTheme: textTheme,
               trailing: TextButton(
-                onPressed: () => debugPrint("ToS Clicked"),
+                onPressed: () => debugPrint('ToS Clicked'),
                 style: _buttonStyle(isDark),
                 child: const Icon(Icons.arrow_outward, size: 18, color: VedaTheme.brandGreen),
               ),
@@ -181,11 +181,11 @@ class SettingsScreen extends ConsumerWidget {
             _buildSettingTile(
               isDark: isDark,
               icon: Icons.description_rounded,
-              label: "Terms of Use",
-              subtitle: "User agreement",
+              label: 'Terms of Use',
+              subtitle: 'User agreement',
               textTheme: textTheme,
               trailing: TextButton(
-                onPressed: () => debugPrint("ToS Clicked"),
+                onPressed: () => debugPrint('ToS Clicked'),
                 style: _buttonStyle(isDark),
                 child: const Icon(Icons.arrow_outward, size: 18, color: VedaTheme.brandGreen),
               ),
@@ -195,11 +195,11 @@ class SettingsScreen extends ConsumerWidget {
             _buildSettingTile(
               isDark: isDark,
               icon: Icons.privacy_tip_rounded,
-              label: "Privacy Policy",
-              subtitle: "Data policies",
+              label: 'Privacy Policy',
+              subtitle: 'Data policies',
               textTheme: textTheme,
               trailing: TextButton(
-                onPressed: () => debugPrint("ToS Clicked"),
+                onPressed: () => debugPrint('ToS Clicked'),
                 style: _buttonStyle(isDark),
                 child: const Icon(Icons.arrow_outward, size: 18, color: VedaTheme.brandGreen),
               ),
@@ -215,14 +215,14 @@ class SettingsScreen extends ConsumerWidget {
                           ? const Color.fromARGB(87, 255, 255, 255) 
                           : const Color.fromARGB(128, 0, 0, 0),
                     ),
-                children: [
-                  const TextSpan(text: "Offline AI ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  const TextSpan(text: "cross-references your herb pantry and mild symptoms with "),
-                  const TextSpan(text: "government health reports ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  const TextSpan(text: "to suggest remedies.\n\n"),
-                  const TextSpan(text: "For educational use only. ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  const TextSpan(text: "Veda must not be used for official diagnosis or medical advice.\n\n"),
-                  const TextSpan(text: "Always consult a healthcare professional for severe health concerns."),
+                children: const [
+                  TextSpan(text: 'Offline AI ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: 'cross-references your herb pantry and mild symptoms with '),
+                  TextSpan(text: 'government health reports ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: 'to suggest remedies.\n\n'),
+                  TextSpan(text: 'For educational use only. ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: 'Veda must not be used for official diagnosis or medical advice.\n\n'),
+                  TextSpan(text: 'Always consult a healthcare professional for severe health concerns.'),
                 ],
               ),
               textAlign: TextAlign.left,
@@ -230,14 +230,14 @@ class SettingsScreen extends ConsumerWidget {
 
             const SizedBox(height: 32),
             /// --- Sync ---
-            Text("Data & privacy", style: textTheme.headlineLarge),
+            Text('Data & privacy', style: textTheme.headlineLarge),
             const SizedBox(height: 16),
             _buildSettingTile(
               isDark: isDark,
               icon: Icons.storage_rounded,
-              label: "Clear Data",
+              label: 'Clear Data',
               iconColor: VedaTheme.dangerRed,
-              subtitle: "Delete all data and preferences",
+              subtitle: 'Delete all data and preferences',
               textTheme: textTheme,
               trailing: TextButton(
                 onPressed: () async {
@@ -256,11 +256,11 @@ class SettingsScreen extends ConsumerWidget {
                                     ? const Color.fromARGB(200, 255, 255, 255) 
                                     : const Color.fromARGB(200, 0, 0, 0),
                               ),
-                          children: [
-                            const TextSpan(text: "All of your data will be deleted.\n\nIf you are signed in,\n"),
-                            const TextSpan(text: "synced data will also be deleted.\n\n", style: TextStyle(fontWeight: FontWeight.bold)),
-                            const TextSpan(text: "The app will restart."),
-                            const TextSpan(text: " Continue?", style: TextStyle(fontWeight: FontWeight.bold)),
+                          children: const [
+                            TextSpan(text: 'All of your data will be deleted.\n\nIf you are signed in,\n'),
+                            TextSpan(text: 'synced data will also be deleted.\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(text: 'The app will restart.'),
+                            TextSpan(text: ' Continue?', style: TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),
                         textAlign: TextAlign.left,
@@ -385,10 +385,8 @@ class SettingsScreen extends ConsumerWidget {
     required bool isDark,
     required IconData icon,
     required String label,
-    String? subtitle,
+    required Widget trailing, required TextTheme textTheme, String? subtitle,
     Color? iconColor,
-    required Widget trailing,
-    required TextTheme textTheme,
   }) {
     return Container(
       height: 72,
@@ -475,8 +473,8 @@ class SettingsScreen extends ConsumerWidget {
               Text(currentValue, style: textTheme.headlineSmall?.copyWith(color: VedaTheme.brandGreen)),
               const SizedBox(width: 6),
               ...controller.isOpen
-                  ? [Icon(Icons.keyboard_arrow_up_rounded, size: 16, color: VedaTheme.brandGreen)]
-                  : [Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: VedaTheme.brandGreen)],
+                  ? [const Icon(Icons.keyboard_arrow_up_rounded, size: 16, color: VedaTheme.brandGreen)]
+                  : [const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: VedaTheme.brandGreen)],
             ],
           ),
         );
@@ -511,8 +509,8 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   String _getThemeLabel(ThemeMode mode) {
-    if (mode == ThemeMode.light) return "Light";
-    if (mode == ThemeMode.dark) return "Dark";
-    return "System";
+    if (mode == ThemeMode.light) return 'Light';
+    if (mode == ThemeMode.dark) return 'Dark';
+    return 'System';
   }
 }

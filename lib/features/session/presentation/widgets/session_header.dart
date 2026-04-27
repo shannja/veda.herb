@@ -3,12 +3,7 @@ import 'package:vedaherb/core/theme.dart';
 
 class SessionHeader extends StatelessWidget {
   const SessionHeader({
-    super.key,
-    required this.isDark,
-    required this.titleController,
-    required this.titleFocusNode,
-    required this.onSave,
-    required this.onClose,
+    required this.isDark, required this.titleController, required this.titleFocusNode, required this.onSave, required this.onClose, super.key,
   });
 
   final bool isDark;
@@ -72,7 +67,7 @@ class SessionHeader extends StatelessWidget {
                 ],
               ),
               Text(
-                "Powered by Gemma · Offline",
+                'Powered by Gemma · Offline',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: VedaTheme.brandGreen,
                     ),

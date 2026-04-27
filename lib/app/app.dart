@@ -17,7 +17,7 @@ class VedaHerbApp extends ConsumerWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: 'Veda',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: VedaTheme.lightTheme,
       darkTheme: VedaTheme.darkTheme,
       themeMode: themeMode,

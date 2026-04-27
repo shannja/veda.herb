@@ -7,9 +7,7 @@ import 'package:vedaherb/features/session/domain/models.dart';
 
 class SessionMessageBubble extends StatelessWidget {
   const SessionMessageBubble({
-    super.key,
-    required this.message,
-    required this.isDark,
+    required this.message, required this.isDark, super.key,
   });
 
   final SessionChatMessage message;

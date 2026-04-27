@@ -26,32 +26,32 @@ class VedaTheme {
       ),
       
       // For titles
-      headlineLarge: TextStyle(
+      headlineLarge: const TextStyle(
         fontFamily: titleFont,
         fontWeight: FontWeight.bold,
         fontSize: 15,
       ),
-      headlineMedium: TextStyle(
+      headlineMedium: const TextStyle(
         fontFamily: titleFont,
         fontWeight: FontWeight.bold,
         fontSize: 14,
       ),
-      headlineSmall: TextStyle(
+      headlineSmall: const TextStyle(
         fontFamily: titleFont,
         fontWeight: FontWeight.bold,
         fontSize: 13,
       ),
 
       // For Descriptions / Subtitles
-      bodyLarge: TextStyle(
+      bodyLarge: const TextStyle(
         fontFamily: bodyFont,
         fontSize: 12,
       ),
-      bodyMedium: TextStyle(
+      bodyMedium: const TextStyle(
         fontFamily: bodyFont,
         fontSize: 11,
       ),
-      bodySmall: TextStyle(
+      bodySmall: const TextStyle(
         fontFamily: bodyFont,
         fontSize: 10,
       ),

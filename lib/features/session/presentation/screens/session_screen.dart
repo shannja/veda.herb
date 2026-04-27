@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:vedaherb/core/theme.dart';
+import 'package:vedaherb/core/validation/input_validator.dart';
 import 'package:vedaherb/features/session/application/all_sessions_controller.dart';
 import 'package:vedaherb/features/session/application/language_service.dart';
 import 'package:vedaherb/features/session/application/session_controller.dart';
@@ -21,8 +22,7 @@ class SessionScreen extends ConsumerStatefulWidget {
   final String? sessionId;
 
   const SessionScreen({
-    super.key,
-    required this.entryPoint,
+    required this.entryPoint, super.key,
     this.sessionId,
   });
 
@@ -95,8 +95,8 @@ class _SessionScreenState extends ConsumerState<SessionScreen>
       _transitionController.value = existing.currentState == SessionState.cameraFullscreen ? 0.0 : 1.0;
     } else {
       _titleController.text = widget.entryPoint == SessionEntryPoint.camera
-          ? "Garden Scan - ${DateTime.now().toString().substring(0, 10)}"
-          : "Symptom Chat - ${DateTime.now().toString().substring(0, 10)}";
+          ? 'Garden Scan - ${DateTime.now().toString().substring(0, 10)}'
+          : 'Symptom Chat - ${DateTime.now().toString().substring(0, 10)}';
 
       if (widget.entryPoint == SessionEntryPoint.chat) {
         ref.read(sessionStateProviderFamily(_sessionId).notifier).setStateValue(SessionState.chatting);
@@ -111,7 +111,7 @@ class _SessionScreenState extends ConsumerState<SessionScreen>
 
     final loaded = await _languageService.load();
     if (mounted) setState(() {});
-    debugPrint('Gemma loaded: $loaded');
+    debugPrint('LanguageService loaded: $loaded');
   }
 
   Future<void> _saveSession() async {
@@ -120,8 +120,12 @@ class _SessionScreenState extends ConsumerState<SessionScreen>
       final messages = ref.read(sessionMessagesProvider(_sessionId));
       final plant = ref.read(sessionIdentifiedPlantProvider(_sessionId));
       final sessionState = ref.read(sessionStateProviderFamily(_sessionId));
-      final titleText = _titleController.text.trim();
-      final title = titleText.isNotEmpty ? titleText : "Session ${_sessionId.substring(0, 5)}";
+      
+      // Sanitize and validate title
+      final rawTitle = _titleController.text.trim();
+      final title = InputValidator.isNotBlank(rawTitle)
+          ? InputValidator.sanitizeTitle(rawTitle)
+          : 'Session ${_sessionId.substring(0, 5)}';
 
       final sessionsState = ref.read(allSessionsControllerProvider);
       if (sessionsState is! AsyncData<Map<String, SessionData>>) return;
@@ -163,8 +167,12 @@ class _SessionScreenState extends ConsumerState<SessionScreen>
   void _sendMessage() async {
     if (_isDisposed || _isGenerating) return;
 
-    final text = _textController.text.trim();
-    if (text.isEmpty) return;
+    final rawText = _textController.text.trim();
+    if (rawText.isEmpty) return;
+
+    // Sanitize user input before storing
+    final text = InputValidator.sanitizeText(rawText);
+    if (!InputValidator.isNotBlank(text)) return;
 
     _addMessage(SessionChatMessage(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -175,8 +183,13 @@ class _SessionScreenState extends ConsumerState<SessionScreen>
     _textController.clear();
 
     if (!_languageService.isLoaded) {
-      _addVedaMessage("Veda is warming up. Please wait a moment...");
-      return;
+      _addVedaMessage('Veda is warming up, trying to load...');
+      final loaded = await _languageService.load();
+      if (!loaded) {
+        _addVedaMessage('Something is wrong.');
+        return;
+      }
+      if (mounted) setState(() {});
     }
 
     setState(() => _isGenerating = true);
@@ -242,7 +255,7 @@ class _SessionScreenState extends ConsumerState<SessionScreen>
         timestamp: DateTime.now(),
       ));
       if (mounted) setState(() {});
-      _transitionToChat("Lagundi");
+      _transitionToChat('Lagundi');
     }
   }
 
@@ -266,12 +279,12 @@ class _SessionScreenState extends ConsumerState<SessionScreen>
     ref.read(sessionStateProviderFamily(_sessionId).notifier).setStateValue(SessionState.chatting);
     _addMessage(SessionChatMessage(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      text: "🌿 Identified: $plantName",
+      text: '🌿 Identified: $plantName',
       isUser: false,
       timestamp: DateTime.now(),
       type: MessageType.plantResult,
     ));
-    _addVedaMessage("I found $plantName. This herb is commonly used in traditional medicine. What symptoms are you feeling?");
+    _addVedaMessage('I found $plantName. This herb is commonly used in traditional medicine. What symptoms are you feeling?');
   }
 
   void _scrollToBottom() {
